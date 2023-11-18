@@ -20,21 +20,13 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	TrainTicketService_PurchaseTicket_FullMethodName = "/trainTicketing.TrainTicketService/PurchaseTicket"
-	TrainTicketService_UserDetails_FullMethodName    = "/trainTicketing.TrainTicketService/UserDetails"
-	TrainTicketService_Users_FullMethodName          = "/trainTicketing.TrainTicketService/Users"
-	TrainTicketService_RemoveUser_FullMethodName     = "/trainTicketing.TrainTicketService/RemoveUser"
-	TrainTicketService_ModifyUserSeat_FullMethodName = "/trainTicketing.TrainTicketService/ModifyUserSeat"
 )
 
 // TrainTicketServiceClient is the client API for TrainTicketService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TrainTicketServiceClient interface {
-	PurchaseTicket(ctx context.Context, in *Ticket, opts ...grpc.CallOption) (*Ticket, error)
-	UserDetails(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*User, error)
-	Users(ctx context.Context, in *GetUsersOptions, opts ...grpc.CallOption) (TrainTicketService_UsersClient, error)
-	RemoveUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*Empty, error)
-	ModifyUserSeat(ctx context.Context, in *Seat, opts ...grpc.CallOption) (*Empty, error)
+	PurchaseTicket(ctx context.Context, in *PurchaseTicketRequest, opts ...grpc.CallOption) (*PurchaseTicketResponse, error)
 }
 
 type trainTicketServiceClient struct {
@@ -45,68 +37,9 @@ func NewTrainTicketServiceClient(cc grpc.ClientConnInterface) TrainTicketService
 	return &trainTicketServiceClient{cc}
 }
 
-func (c *trainTicketServiceClient) PurchaseTicket(ctx context.Context, in *Ticket, opts ...grpc.CallOption) (*Ticket, error) {
-	out := new(Ticket)
+func (c *trainTicketServiceClient) PurchaseTicket(ctx context.Context, in *PurchaseTicketRequest, opts ...grpc.CallOption) (*PurchaseTicketResponse, error) {
+	out := new(PurchaseTicketResponse)
 	err := c.cc.Invoke(ctx, TrainTicketService_PurchaseTicket_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *trainTicketServiceClient) UserDetails(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*User, error) {
-	out := new(User)
-	err := c.cc.Invoke(ctx, TrainTicketService_UserDetails_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *trainTicketServiceClient) Users(ctx context.Context, in *GetUsersOptions, opts ...grpc.CallOption) (TrainTicketService_UsersClient, error) {
-	stream, err := c.cc.NewStream(ctx, &TrainTicketService_ServiceDesc.Streams[0], TrainTicketService_Users_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &trainTicketServiceUsersClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type TrainTicketService_UsersClient interface {
-	Recv() (*Seat, error)
-	grpc.ClientStream
-}
-
-type trainTicketServiceUsersClient struct {
-	grpc.ClientStream
-}
-
-func (x *trainTicketServiceUsersClient) Recv() (*Seat, error) {
-	m := new(Seat)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *trainTicketServiceClient) RemoveUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, TrainTicketService_RemoveUser_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *trainTicketServiceClient) ModifyUserSeat(ctx context.Context, in *Seat, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, TrainTicketService_ModifyUserSeat_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -117,11 +50,7 @@ func (c *trainTicketServiceClient) ModifyUserSeat(ctx context.Context, in *Seat,
 // All implementations must embed UnimplementedTrainTicketServiceServer
 // for forward compatibility
 type TrainTicketServiceServer interface {
-	PurchaseTicket(context.Context, *Ticket) (*Ticket, error)
-	UserDetails(context.Context, *Empty) (*User, error)
-	Users(*GetUsersOptions, TrainTicketService_UsersServer) error
-	RemoveUser(context.Context, *DeleteUserRequest) (*Empty, error)
-	ModifyUserSeat(context.Context, *Seat) (*Empty, error)
+	PurchaseTicket(context.Context, *PurchaseTicketRequest) (*PurchaseTicketResponse, error)
 	mustEmbedUnimplementedTrainTicketServiceServer()
 }
 
@@ -129,20 +58,8 @@ type TrainTicketServiceServer interface {
 type UnimplementedTrainTicketServiceServer struct {
 }
 
-func (UnimplementedTrainTicketServiceServer) PurchaseTicket(context.Context, *Ticket) (*Ticket, error) {
+func (UnimplementedTrainTicketServiceServer) PurchaseTicket(context.Context, *PurchaseTicketRequest) (*PurchaseTicketResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PurchaseTicket not implemented")
-}
-func (UnimplementedTrainTicketServiceServer) UserDetails(context.Context, *Empty) (*User, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UserDetails not implemented")
-}
-func (UnimplementedTrainTicketServiceServer) Users(*GetUsersOptions, TrainTicketService_UsersServer) error {
-	return status.Errorf(codes.Unimplemented, "method Users not implemented")
-}
-func (UnimplementedTrainTicketServiceServer) RemoveUser(context.Context, *DeleteUserRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveUser not implemented")
-}
-func (UnimplementedTrainTicketServiceServer) ModifyUserSeat(context.Context, *Seat) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ModifyUserSeat not implemented")
 }
 func (UnimplementedTrainTicketServiceServer) mustEmbedUnimplementedTrainTicketServiceServer() {}
 
@@ -158,7 +75,7 @@ func RegisterTrainTicketServiceServer(s grpc.ServiceRegistrar, srv TrainTicketSe
 }
 
 func _TrainTicketService_PurchaseTicket_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Ticket)
+	in := new(PurchaseTicketRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -170,82 +87,7 @@ func _TrainTicketService_PurchaseTicket_Handler(srv interface{}, ctx context.Con
 		FullMethod: TrainTicketService_PurchaseTicket_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrainTicketServiceServer).PurchaseTicket(ctx, req.(*Ticket))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TrainTicketService_UserDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrainTicketServiceServer).UserDetails(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrainTicketService_UserDetails_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrainTicketServiceServer).UserDetails(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TrainTicketService_Users_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(GetUsersOptions)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(TrainTicketServiceServer).Users(m, &trainTicketServiceUsersServer{stream})
-}
-
-type TrainTicketService_UsersServer interface {
-	Send(*Seat) error
-	grpc.ServerStream
-}
-
-type trainTicketServiceUsersServer struct {
-	grpc.ServerStream
-}
-
-func (x *trainTicketServiceUsersServer) Send(m *Seat) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _TrainTicketService_RemoveUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrainTicketServiceServer).RemoveUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrainTicketService_RemoveUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrainTicketServiceServer).RemoveUser(ctx, req.(*DeleteUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TrainTicketService_ModifyUserSeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Seat)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrainTicketServiceServer).ModifyUserSeat(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrainTicketService_ModifyUserSeat_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrainTicketServiceServer).ModifyUserSeat(ctx, req.(*Seat))
+		return srv.(TrainTicketServiceServer).PurchaseTicket(ctx, req.(*PurchaseTicketRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -261,25 +103,7 @@ var TrainTicketService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "PurchaseTicket",
 			Handler:    _TrainTicketService_PurchaseTicket_Handler,
 		},
-		{
-			MethodName: "UserDetails",
-			Handler:    _TrainTicketService_UserDetails_Handler,
-		},
-		{
-			MethodName: "RemoveUser",
-			Handler:    _TrainTicketService_RemoveUser_Handler,
-		},
-		{
-			MethodName: "ModifyUserSeat",
-			Handler:    _TrainTicketService_ModifyUserSeat_Handler,
-		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Users",
-			Handler:       _TrainTicketService_Users_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "internal/proto/tickets.proto",
 }
