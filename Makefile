@@ -1,4 +1,4 @@
-.PHONY: install-deps generate-mocks rebuild-proto
+.PHONY: install-deps generate-mocks proto test
 
 PROTO_FILE = ./internal/proto/tickets.proto
 
@@ -10,5 +10,8 @@ install-deps:
 generate-mocks: install-deps
 	go generate ./...
 
-rebuild-proto: install-deps
+proto: install-deps
 	protoc -I=. --go_out ./internal/proto --go-grpc_out=./internal/proto $(PROTO_FILE)
+
+test:
+	go test ./...
