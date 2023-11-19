@@ -12,8 +12,8 @@ type TicketRepositoryAdapter struct {
 }
 
 // Create implements service.TicketRepository.
-func (a *TicketRepositoryAdapter) Create(ctx context.Context, userID uint, from string, to string, purchasePrice float32) (service.Ticket, error) {
-	ticket, err := a.repo.Create(ctx, userID, from, to, purchasePrice)
+func (a *TicketRepositoryAdapter) Create(ctx context.Context, user service.User, from string, to string, purchasePrice float32) (service.Ticket, error) {
+	ticket, err := a.repo.Create(ctx, user.GetFirstName(), user.GetLastName(), user.GetEmail(), from, to, purchasePrice)
 	if err != nil {
 		return nil, err
 	}

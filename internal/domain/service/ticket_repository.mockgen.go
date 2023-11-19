@@ -35,16 +35,16 @@ func (m *MockTicketRepository) EXPECT() *MockTicketRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockTicketRepository) Create(ctx context.Context, userID uint, from, to string, purchasePrice float32) (Ticket, error) {
+func (m *MockTicketRepository) Create(ctx context.Context, user User, from, to string, purchasePrice float32) (Ticket, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, userID, from, to, purchasePrice)
+	ret := m.ctrl.Call(m, "Create", ctx, user, from, to, purchasePrice)
 	ret0, _ := ret[0].(Ticket)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockTicketRepositoryMockRecorder) Create(ctx, userID, from, to, purchasePrice interface{}) *gomock.Call {
+func (mr *MockTicketRepositoryMockRecorder) Create(ctx, user, from, to, purchasePrice interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockTicketRepository)(nil).Create), ctx, userID, from, to, purchasePrice)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockTicketRepository)(nil).Create), ctx, user, from, to, purchasePrice)
 }

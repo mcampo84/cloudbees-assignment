@@ -4,8 +4,10 @@
 HOST="localhost:50051"  # Change this to your gRPC server's host and port
 PROTO_FILE="./internal/proto/tickets.proto"  # Replace with the path to your .proto file
 
-# PurchaseTicket request data
-USER_ID=123
+# Define test data
+USER_FIRST_NAME="John"
+USER_LAST_NAME="Doe"
+USER_EMAIL="john@example.com"
 FROM="London"
 TO="France"
 PRICE=20.0
@@ -13,7 +15,11 @@ PRICE=20.0
 # Create JSON payload for the PurchaseTicket request
 PAYLOAD=$(cat <<EOF
 {
-  "user_id": $USER_ID,
+  "user": {
+    "first_name": "$USER_FIRST_NAME",
+    "last_name": "$USER_LAST_NAME",
+    "email": "$USER_EMAIL"
+  },
   "from": "$FROM",
   "to": "$TO",
   "price": $PRICE

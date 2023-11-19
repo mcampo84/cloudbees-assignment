@@ -35,10 +35,10 @@ func (m *MockTicket) EXPECT() *MockTicketMockRecorder {
 }
 
 // ToResponse mocks base method.
-func (m *MockTicket) ToResponse() *pb.PurchaseTicketResponse {
+func (m *MockTicket) ToResponse() *pb.Ticket {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ToResponse")
-	ret0, _ := ret[0].(*pb.PurchaseTicketResponse)
+	ret0, _ := ret[0].(*pb.Ticket)
 	return ret0
 }
 

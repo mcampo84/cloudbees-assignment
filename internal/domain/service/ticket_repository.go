@@ -5,5 +5,5 @@ package service
 import "context"
 
 type TicketRepository interface {
-	Create(ctx context.Context, userID uint, from string, to string, purchasePrice float32) (Ticket, error)
+	Create(ctx context.Context, user User, from string, to string, purchasePrice float32) (Ticket, error)
 }

@@ -4,17 +4,10 @@ package trainTicketing;
 
 option go_package = "./pb";
 
-message PurchaseTicketRequest {
-    int64 user_id = 1;
+message Ticket {
+    User user = 1;
     string from = 2;
     string to = 3;
-    float price = 4;
-}
-
-message PurchaseTicketResponse {
-    string from = 1;
-    string to = 2;
-    User user = 3;
     float price = 4;
 }
 
@@ -25,5 +18,5 @@ message User {
 }
 
 service TrainTicketService {
-    rpc PurchaseTicket (PurchaseTicketRequest) returns (PurchaseTicketResponse);
+    rpc PurchaseTicket (Ticket) returns (Ticket);
 }

@@ -29,14 +29,14 @@ func (suite *TicketServiceSuite) TearDownTest() {
 func (suite *TicketServiceSuite) TestPurchaseTicket_Success() {
 	// Mock behavior for successful ticket purchase
 	expectedTicket := new(MockTicket)
-	userID := uint(123)
+	mockUser := new(MockUser)
 	from := "from"
 	to := "to"
 	price := float32(20.0)
-	suite.mockRepo.EXPECT().Create(gomock.Any(), userID, from, to, price).Return(expectedTicket, nil)
+	suite.mockRepo.EXPECT().Create(gomock.Any(), mockUser, from, to, price).Return(expectedTicket, nil)
 
 	// Invoke method
-	ticket, err := suite.ticketService.PurchaseTicket(context.Background(), userID, from, to, price)
+	ticket, err := suite.ticketService.PurchaseTicket(context.Background(), mockUser, from, to, price)
 
 	// Assert expectations and results
 	suite.NoError(err)
@@ -45,14 +45,14 @@ func (suite *TicketServiceSuite) TestPurchaseTicket_Success() {
 
 func (suite *TicketServiceSuite) TestPurchaseTicket_Failure() {
 	// Mock behavior for failed ticket purchase
-	userID := uint(123)
+	mockUser := new(MockUser)
 	from := "from"
 	to := "to"
 	price := float32(20.0)
-	suite.mockRepo.EXPECT().Create(gomock.Any(), userID, from, to, price).Return(nil, errors.New("oops"))
+	suite.mockRepo.EXPECT().Create(gomock.Any(), mockUser, from, to, price).Return(nil, errors.New("oops"))
 
 	// Invoke method
-	_, err := suite.ticketService.PurchaseTicket(context.Background(), userID, from, to, price)
+	_, err := suite.ticketService.PurchaseTicket(context.Background(), mockUser, from, to, price)
 
 	// Assert expectations and results
 	suite.Error(err)

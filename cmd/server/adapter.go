@@ -18,6 +18,6 @@ func NewServerAdapter(server *grpc.Server) pb.TrainTicketServiceServer {
 }
 
 // PurchaseTicket implements pb.TrainTicketServiceServer.
-func (a *ServerAdapter) PurchaseTicket(ctx context.Context, req *pb.PurchaseTicketRequest) (*pb.PurchaseTicketResponse, error) {
+func (a *ServerAdapter) PurchaseTicket(ctx context.Context, req *pb.Ticket) (*pb.Ticket, error) {
 	return a.server.PurchaseTicket(ctx, req)
 }

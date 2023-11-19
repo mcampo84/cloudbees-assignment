@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TrainTicketServiceClient interface {
-	PurchaseTicket(ctx context.Context, in *PurchaseTicketRequest, opts ...grpc.CallOption) (*PurchaseTicketResponse, error)
+	PurchaseTicket(ctx context.Context, in *Ticket, opts ...grpc.CallOption) (*Ticket, error)
 }
 
 type trainTicketServiceClient struct {
@@ -37,8 +37,8 @@ func NewTrainTicketServiceClient(cc grpc.ClientConnInterface) TrainTicketService
 	return &trainTicketServiceClient{cc}
 }
 
-func (c *trainTicketServiceClient) PurchaseTicket(ctx context.Context, in *PurchaseTicketRequest, opts ...grpc.CallOption) (*PurchaseTicketResponse, error) {
-	out := new(PurchaseTicketResponse)
+func (c *trainTicketServiceClient) PurchaseTicket(ctx context.Context, in *Ticket, opts ...grpc.CallOption) (*Ticket, error) {
+	out := new(Ticket)
 	err := c.cc.Invoke(ctx, TrainTicketService_PurchaseTicket_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (c *trainTicketServiceClient) PurchaseTicket(ctx context.Context, in *Purch
 // All implementations must embed UnimplementedTrainTicketServiceServer
 // for forward compatibility
 type TrainTicketServiceServer interface {
-	PurchaseTicket(context.Context, *PurchaseTicketRequest) (*PurchaseTicketResponse, error)
+	PurchaseTicket(context.Context, *Ticket) (*Ticket, error)
 	mustEmbedUnimplementedTrainTicketServiceServer()
 }
 
@@ -58,7 +58,7 @@ type TrainTicketServiceServer interface {
 type UnimplementedTrainTicketServiceServer struct {
 }
 
-func (UnimplementedTrainTicketServiceServer) PurchaseTicket(context.Context, *PurchaseTicketRequest) (*PurchaseTicketResponse, error) {
+func (UnimplementedTrainTicketServiceServer) PurchaseTicket(context.Context, *Ticket) (*Ticket, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PurchaseTicket not implemented")
 }
 func (UnimplementedTrainTicketServiceServer) mustEmbedUnimplementedTrainTicketServiceServer() {}
@@ -75,7 +75,7 @@ func RegisterTrainTicketServiceServer(s grpc.ServiceRegistrar, srv TrainTicketSe
 }
 
 func _TrainTicketService_PurchaseTicket_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PurchaseTicketRequest)
+	in := new(Ticket)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func _TrainTicketService_PurchaseTicket_Handler(srv interface{}, ctx context.Con
 		FullMethod: TrainTicketService_PurchaseTicket_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrainTicketServiceServer).PurchaseTicket(ctx, req.(*PurchaseTicketRequest))
+		return srv.(TrainTicketServiceServer).PurchaseTicket(ctx, req.(*Ticket))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -29,16 +29,20 @@ func (suite *ServerSuite) SetupTest() {
 // TestPurchaseTicket_Success tests the PurchaseTicket method on successful ticket purchase.
 func (suite *ServerSuite) TestPurchaseTicket_Success() {
 	ticket := NewMockTicket(suite.controller)
-	expectedResponse := &pb.PurchaseTicketResponse{}
-	userID := int64(1)
-	suite.mockTicketSvc.EXPECT().PurchaseTicket(gomock.Any(), uint(userID), "from", "to", float32(20.0)).Return(ticket, nil)
+	expectedResponse := &pb.Ticket{}
+	user := &pb.User{
+		FirstName: "John",
+		LastName:  "Doe",
+		Email:     "jdoe@email.co",
+	}
+	suite.mockTicketSvc.EXPECT().PurchaseTicket(gomock.Any(), user, "from", "to", float32(20.0)).Return(ticket, nil)
 	ticket.EXPECT().ToResponse().Return(expectedResponse)
 
-	request := &pb.PurchaseTicketRequest{
-		UserId: userID,
-		From:   "from",
-		To:     "to",
-		Price:  20.0,
+	request := &pb.Ticket{
+		User:  user,
+		From:  "from",
+		To:    "to",
+		Price: 20.0,
 	}
 
 	response, err := suite.server.PurchaseTicket(context.Background(), request)
@@ -51,14 +55,18 @@ func (suite *ServerSuite) TestPurchaseTicket_Success() {
 func (suite *ServerSuite) TestPurchaseTicket_Failure() {
 	// Mock TicketService behavior for a failure scenario
 	err := errors.New("User not found")
-	userID := int64(1)
-	suite.mockTicketSvc.EXPECT().PurchaseTicket(gomock.Any(), uint(userID), "from", "to", float32(20.0)).Return(nil, err)
+	user := &pb.User{
+		FirstName: "John",
+		LastName:  "Doe",
+		Email:     "jdoe@email.co",
+	}
+	suite.mockTicketSvc.EXPECT().PurchaseTicket(gomock.Any(), user, "from", "to", float32(20.0)).Return(nil, err)
 
-	request := &pb.PurchaseTicketRequest{
-		UserId: userID,
-		From:   "from",
-		To:     "to",
-		Price:  20.0,
+	request := &pb.Ticket{
+		User:  user,
+		From:  "from",
+		To:    "to",
+		Price: 20.0,
 	}
 
 	_, err = suite.server.PurchaseTicket(context.Background(), request)

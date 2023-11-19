@@ -16,11 +16,8 @@ func NewTicketRepository(userRepo *UserRepository) *TicketRepository {
 	return &TicketRepository{tickets: map[uint]*model.Ticket{}, userRepo: userRepo}
 }
 
-func (r *TicketRepository) Create(ctx context.Context, userID uint, from string, to string, purchasePrice float32) (*model.Ticket, error) {
-	user, err := r.userRepo.GetByID(userID)
-	if err != nil {
-		return nil, err
-	}
+func (r *TicketRepository) Create(ctx context.Context, firstName string, lastName string, email string, from string, to string, purchasePrice float32) (*model.Ticket, error) {
+	user := model.NewUser(firstName, lastName, email)
 
 	ticket := model.NewTicket(user, from, to, purchasePrice)
 	ticket.ID = r.generateID()
