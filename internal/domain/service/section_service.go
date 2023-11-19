@@ -22,7 +22,6 @@ func NewSectionService() SectionService {
 func (a *sectionService) GetOpenSeats(section Section) int {
 	openSeats := 0
 	for _, seat := range section.GetSeats() {
-		fmt.Println(fmt.Sprintf("seat %d passenger: %s", seat.GetNumber(), seat.GetPassenger()))
 		if seat.GetPassenger() == nil {
 			openSeats += 1
 		}

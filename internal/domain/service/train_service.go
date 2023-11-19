@@ -41,7 +41,7 @@ func (s *trainService) AutoAssignSeat(train Train, passenger User) error {
 		return err
 	}
 
-	print("assigning passenger to seat %d in %s", seat.GetNumber(), seat.GetSection().GetLabel())
+	fmt.Println(fmt.Sprintf("assigning passenger to seat %d in %s", seat.GetNumber(), seat.GetSection().GetLabel()))
 	return seat.AssignPassenger(passenger)
 }
 
