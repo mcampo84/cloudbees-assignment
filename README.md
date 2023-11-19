@@ -46,3 +46,5 @@ To start the application, execute the following command from the project root:
 ```shell
 make start
 ```
+
+**Note:** You will have to manually terminate the process which listens on port 50051 by finding it via the `ps` command, and killing it.
