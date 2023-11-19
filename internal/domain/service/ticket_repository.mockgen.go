@@ -35,7 +35,7 @@ func (m *MockTicketRepository) EXPECT() *MockTicketRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockTicketRepository) Create(ctx context.Context, userID int64, from, to string, purchasePrice float32) (Ticket, error) {
+func (m *MockTicketRepository) Create(ctx context.Context, userID uint, from, to string, purchasePrice float32) (Ticket, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, userID, from, to, purchasePrice)
 	ret0, _ := ret[0].(Ticket)

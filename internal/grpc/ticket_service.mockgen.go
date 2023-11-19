@@ -34,7 +34,7 @@ func (m *MockTicketService) EXPECT() *MockTicketServiceMockRecorder {
 }
 
 // PurchaseTicket mocks base method.
-func (m *MockTicketService) PurchaseTicket(userID int64, from, to string, purchasePrice float32) (Ticket, error) {
+func (m *MockTicketService) PurchaseTicket(userID uint, from, to string, purchasePrice float32) (Ticket, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PurchaseTicket", userID, from, to, purchasePrice)
 	ret0, _ := ret[0].(Ticket)

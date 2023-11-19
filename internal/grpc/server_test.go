@@ -31,7 +31,7 @@ func (suite *ServerSuite) TestPurchaseTicket_Success() {
 	ticket := NewMockTicket(suite.controller)
 	expectedResponse := &pb.PurchaseTicketResponse{}
 	userID := int64(1)
-	suite.mockTicketSvc.EXPECT().PurchaseTicket(userID, "from", "to", float32(20.0)).Return(ticket, nil)
+	suite.mockTicketSvc.EXPECT().PurchaseTicket(uint(userID), "from", "to", float32(20.0)).Return(ticket, nil)
 	ticket.EXPECT().ToResponse().Return(expectedResponse)
 
 	request := &pb.PurchaseTicketRequest{
@@ -52,7 +52,7 @@ func (suite *ServerSuite) TestPurchaseTicket_Failure() {
 	// Mock TicketService behavior for a failure scenario
 	err := errors.New("User not found")
 	userID := int64(1)
-	suite.mockTicketSvc.EXPECT().PurchaseTicket(userID, "from", "to", float32(20.0)).Return(nil, err)
+	suite.mockTicketSvc.EXPECT().PurchaseTicket(uint(userID), "from", "to", float32(20.0)).Return(nil, err)
 
 	request := &pb.PurchaseTicketRequest{
 		UserId: userID,

@@ -3,5 +3,5 @@
 package grpc
 
 type TicketService interface {
-	PurchaseTicket(userID int64, from string, to string, purchasePrice float32) (Ticket, error)
+	PurchaseTicket(userID uint, from string, to string, purchasePrice float32) (Ticket, error)
 }

@@ -17,7 +17,7 @@ func NewServer(ticketService TicketService) *Server {
 }
 
 func (s *Server) PurchaseTicket(ctx context.Context, req *pb.PurchaseTicketRequest) (*pb.PurchaseTicketResponse, error) {
-	userID := req.GetUserId()
+	userID := uint(req.GetUserId())
 	from := req.GetFrom()
 	to := req.GetTo()
 	purchasePrice := req.GetPrice()

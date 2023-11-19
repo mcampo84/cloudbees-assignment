@@ -29,7 +29,7 @@ func (suite *TicketServiceSuite) TearDownTest() {
 func (suite *TicketServiceSuite) TestPurchaseTicket_Success() {
 	// Mock behavior for successful ticket purchase
 	expectedTicket := new(MockTicket)
-	userID := int64(123)
+	userID := uint(123)
 	from := "from"
 	to := "to"
 	price := float32(20.0)
@@ -45,7 +45,7 @@ func (suite *TicketServiceSuite) TestPurchaseTicket_Success() {
 
 func (suite *TicketServiceSuite) TestPurchaseTicket_Failure() {
 	// Mock behavior for failed ticket purchase
-	userID := int64(123)
+	userID := uint(123)
 	from := "from"
 	to := "to"
 	price := float32(20.0)
