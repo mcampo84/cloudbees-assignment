@@ -23,7 +23,21 @@ func (r *UserRepository) GetByID(id uint) (*model.User, error) {
 	return user, nil
 }
 
-func (r *UserRepository) Create(firstName string, lastName string, email string) *model.User {
+func (r *UserRepository) GetByData(firstName string, lastName string, email string) (*model.User, error) {
+	for _, user := range r.users {
+		if user.FirstName == firstName && user.LastName == lastName && user.Email == email {
+			return user, nil
+		}
+	}
+
+	return nil, domainError.NotFound("user %s %s", firstName, lastName)
+}
+
+func (r *UserRepository) FindOrCreate(firstName string, lastName string, email string) *model.User {
+	if user, _ := r.GetByData(firstName, lastName, email); user != nil {
+		return user
+	}
+
 	user := model.NewUser(firstName, lastName, email)
 	// auto-increment the ID
 	user.ID = r.generateID()

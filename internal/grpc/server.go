@@ -16,17 +16,19 @@ func NewServer(ticketService TicketService) *Server {
 	return &Server{ticketService: ticketService}
 }
 
-func (s *Server) PurchaseTicket(ctx context.Context, req *pb.Ticket) (*pb.Ticket, error) {
-	user := req.GetUser()
+func (s *Server) PurchaseTicket(ctx context.Context, req *pb.Ticket) (*pb.Receipt, error) {
+	firstName := req.GetFirstName()
+	lastName := req.GetLastName()
+	email := req.GetEmail()
 	from := req.GetFrom()
 	to := req.GetTo()
 	purchasePrice := req.GetPrice()
 
-	ticket, err := s.ticketService.PurchaseTicket(ctx, user, from, to, purchasePrice)
+	ticket, err := s.ticketService.PurchaseTicket(ctx, firstName, lastName, email, from, to, purchasePrice)
 	st, ok := status.FromError(err)
 	if !ok {
 		return nil, st.Err()
 	}
 
-	return ticket.ToResponse(), nil
+	return ticket.GenerateReceipt(), nil
 }

@@ -5,5 +5,5 @@ package grpc
 import "github.com/mcampo84/cloudbees-assignment/internal/proto/pb"
 
 type Ticket interface {
-	ToResponse() *pb.Ticket
+	GenerateReceipt() *pb.Receipt
 }

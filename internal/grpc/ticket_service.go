@@ -4,10 +4,8 @@ package grpc
 
 import (
 	"context"
-
-	"github.com/mcampo84/cloudbees-assignment/internal/proto/pb"
 )
 
 type TicketService interface {
-	PurchaseTicket(ctx context.Context, user *pb.User, from string, to string, purchasePrice float32) (Ticket, error)
+	PurchaseTicket(ctx context.Context, firstName string, lastName string, email string, from string, to string, purchasePrice float32) (Ticket, error)
 }

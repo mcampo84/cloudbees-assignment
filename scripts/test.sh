@@ -15,14 +15,12 @@ PRICE=20.0
 # Create JSON payload for the PurchaseTicket request
 PAYLOAD=$(cat <<EOF
 {
-  "user": {
     "first_name": "$USER_FIRST_NAME",
     "last_name": "$USER_LAST_NAME",
-    "email": "$USER_EMAIL"
-  },
-  "from": "$FROM",
-  "to": "$TO",
-  "price": $PRICE
+    "email": "$USER_EMAIL",
+    "from": "$FROM",
+    "to": "$TO",
+    "price": $PRICE
 }
 EOF
 )

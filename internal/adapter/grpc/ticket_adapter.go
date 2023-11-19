@@ -14,11 +14,11 @@ func NewTicketAdapter(ticket service.Ticket) grpc.Ticket {
 	return &TicketAdapter{ticket: ticket}
 }
 
-func (a *TicketAdapter) ToResponse() *pb.Ticket {
+func (a *TicketAdapter) GenerateReceipt() *pb.Receipt {
 	user := a.ticket.GetUser()
 	userAdapter := NewUserAdapter(user)
 
-	return &pb.Ticket{
+	return &pb.Receipt{
 		User:  userAdapter.ToProto(),
 		From:  a.ticket.GetFrom(),
 		To:    a.ticket.GetTo(),

@@ -20,7 +20,7 @@ func (suite *TicketRepositorySuite) SetupTest() {
 
 func (suite *TicketRepositorySuite) TestCreateTicket_Success() {
 	// Create a user
-	user := suite.userRepo.Create("John", "Doe", "john@example.com")
+	user := suite.userRepo.FindOrCreate("John", "Doe", "john@example.com")
 
 	// Create ticket
 	ticket, err := suite.ticketRepo.Create(context.Background(), user.FirstName, user.LastName, user.Email, "London", "France", 20.0)

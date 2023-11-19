@@ -17,7 +17,7 @@ func NewTicketRepository(userRepo *UserRepository) *TicketRepository {
 }
 
 func (r *TicketRepository) Create(ctx context.Context, firstName string, lastName string, email string, from string, to string, purchasePrice float32) (*model.Ticket, error) {
-	user := model.NewUser(firstName, lastName, email)
+	user := r.userRepo.FindOrCreate(firstName, lastName, email)
 
 	ticket := model.NewTicket(user, from, to, purchasePrice)
 	ticket.ID = r.generateID()

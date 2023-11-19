@@ -34,16 +34,16 @@ func (m *MockTicket) EXPECT() *MockTicketMockRecorder {
 	return m.recorder
 }
 
-// ToResponse mocks base method.
-func (m *MockTicket) ToResponse() *pb.Ticket {
+// GenerateReceipt mocks base method.
+func (m *MockTicket) GenerateReceipt() *pb.Receipt {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ToResponse")
-	ret0, _ := ret[0].(*pb.Ticket)
+	ret := m.ctrl.Call(m, "GenerateReceipt")
+	ret0, _ := ret[0].(*pb.Receipt)
 	return ret0
 }
 
-// ToResponse indicates an expected call of ToResponse.
-func (mr *MockTicketMockRecorder) ToResponse() *gomock.Call {
+// GenerateReceipt indicates an expected call of GenerateReceipt.
+func (mr *MockTicketMockRecorder) GenerateReceipt() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToResponse", reflect.TypeOf((*MockTicket)(nil).ToResponse))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateReceipt", reflect.TypeOf((*MockTicket)(nil).GenerateReceipt))
 }
