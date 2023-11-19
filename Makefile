@@ -1,6 +1,8 @@
-.PHONY: install-deps generate-mocks proto test
+.PHONY: install-deps generate-mocks proto start test
 
 PROTO_FILE = ./internal/proto/tickets.proto
+SERVER_PID_FILE := server.pid
+LOCK_FILE := .lock
 
 install-deps:
 	@which protoc > /dev/null || (echo "protoc not found, installing..." && brew install protobuf) 
@@ -13,6 +15,9 @@ generate-mocks: install-deps
 
 proto: install-deps
 	protoc -I=. --go_out ./internal/proto --go-grpc_out=./internal/proto $(PROTO_FILE)
+
+start: install-deps
+	go run ./cmd &
 
 test: install-deps
 	go test ./...

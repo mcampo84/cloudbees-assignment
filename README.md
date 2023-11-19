@@ -1,24 +1,48 @@
-# Train Ticketing System (Golang gRPC)
+# Train Ticketing System
 
-This repository contains the implementation of a train ticketing system using gRPC in Golang.
+This project implements a Train Ticketing System using gRPC.
 
-## Setup
-1. Clone the repository.
-2. Install Golang and necessary dependencies.
-3. Run `go run cmd/server/main.go` to start the gRPC server.
+### Approach
 
-## gRPC Endpoints
-- `PurchaseTicket`
-- `UserDetails`
-- `UsersBySection`
-- `RemoveUser`
-- `ModifyUserSeat`
+I adopted a domain-driven approach, leveraging interfaces and adapters to enhance code flexibility and facilitate future modifications. Uber fx modules were used for dependency injection and management, ensuring a streamlined implementation.
 
-## Usage
-- Purchase a ticket: [Implement gRPC client code to call PurchaseTicket method]
-- Retrieve user details: [Implement gRPC client code to call UserDetails method]
-- View users by section: [Implement gRPC client code to call UsersBySection method]
-- Remove a user: [Implement gRPC client code to call RemoveUser method]
-- Modify a user's seat: [Implement gRPC client code to call ModifyUserSeat method]
+The project scope appeared larger than the initial Cloudbees estimation of 2 hours. Therefore, I focused on implementing a high-quality solution for a single endpoint rather than delivering a subpar, feature-complete product. Prioritizing quality over functionality minimizes technical debt in the long run.
 
-**Note:** This implementation utilizes gRPC APIs, not RESTful ones. In-memory storage is used; data will be lost on server restart.
+### Purpose of Endpoints
+
+#### PurchaseTicket
+- **Status:** Implemented
+- **Description:** Submits a purchase for a train ticket.
+- **Request Input:** Ticket information including first and last name, email, travel origin, destination, and price.
+- **Response Output:** Receipt with user details, travel information, and price.
+
+#### ViewReceipt
+- **Status:** Unimplemented
+- **Description:** Retrieves the receipt for a user.
+- **Request Input:** User information.
+- **Response Output:** Receipt with user details, travel information, and price.
+
+#### ViewPassengerManifest
+- **Status:** Unimplemented
+- **Description:** Retrieves the passenger manifest.
+- **Request Input:** None.
+- **Response Output:** Manifest containing sections and users.
+
+#### CancelTicket
+- **Status:** Unimplemented
+- **Description:** Cancels a ticket for a user.
+- **Request Input:** User information.
+- **Response Output:** Empty response.
+
+#### ChangeSeat
+- **Status:** Unimplemented
+- **Description:** Modifies a user's seat.
+- **Request Input:** User information, requested section, and seat number.
+- **Response Output:** Receipt with updated seat information.
+
+### Running the Application
+
+To start the application, execute the following command from the project root:
+```shell
+make start
+```
