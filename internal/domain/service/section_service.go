@@ -27,7 +27,7 @@ func (a *sectionService) GetOpenSeats(section Section) int {
 		}
 	}
 
-	fmt.Println(fmt.Sprintf("%s has %d available seats", section.GetLabel(), openSeats))
+	fmt.Printf("%s has %d available seats\n", section.GetLabel(), openSeats)
 
 	return openSeats
 }

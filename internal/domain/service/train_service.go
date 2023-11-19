@@ -41,7 +41,7 @@ func (s *trainService) AutoAssignSeat(train Train, passenger User) error {
 		return err
 	}
 
-	fmt.Println(fmt.Sprintf("assigning passenger to seat %d in %s", seat.GetNumber(), seat.GetSection().GetLabel()))
+	fmt.Printf("assigning passenger to seat %d in %s \n", seat.GetNumber(), seat.GetSection().GetLabel())
 	return seat.AssignPassenger(passenger)
 }
 
@@ -62,7 +62,7 @@ func (s *trainService) getNextAvailableSeat(train Train) (Seat, error) {
 		}
 	}
 
-	fmt.Println(fmt.Sprintf("no available seats in %s found", section.GetLabel()))
+	fmt.Printf("no available seats in %s found\n", section.GetLabel())
 	return nil, domainError.NotFound("the train is fully booked")
 }
 

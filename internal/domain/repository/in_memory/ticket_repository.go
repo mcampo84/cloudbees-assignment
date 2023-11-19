@@ -24,7 +24,7 @@ func (r *TicketRepository) Create(ctx context.Context, user *model.User, train *
 	r.tickets[ticket.ID] = ticket
 	r.maxID = ticket.ID
 
-	fmt.Println(fmt.Sprintf("booked ticket to %s from %s for %s %s at %f with id %d", train.To, train.From, user.FirstName, user.LastName, purchasePrice, ticket.ID))
+	fmt.Printf("booked ticket to %s from %s for %s %s at %f with id %d\n", train.To, train.From, user.FirstName, user.LastName, purchasePrice, ticket.ID)
 
 	user.Tickets = append(user.Tickets, ticket)
 
@@ -32,7 +32,7 @@ func (r *TicketRepository) Create(ctx context.Context, user *model.User, train *
 }
 
 func (r *TicketRepository) Delete(ctx context.Context, id uint) {
-	fmt.Println(fmt.Sprintf("deleting ticket %d", id))
+	fmt.Printf("deleting ticket %d\n", id)
 	delete(r.tickets, id)
 }
 
