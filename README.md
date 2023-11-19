@@ -42,9 +42,19 @@ The project scope appeared larger than the initial Cloudbees estimation of 2 hou
 
 ### Running the Application
 
-To start the application, execute the following command from the project root:
+To start the server, execute the following command from the project root:
 ```shell
-make start
+make start-server
 ```
+In a separate terminal window, start your client:
+```shell
+make start-client
+```
+
+The client will prompt you for inputs to purchase a ticket. You may purchase tickets to/from any of the following trains:
+
+- New York -> Chicago
+- Chicago -> Los Angeles
+- Los Angeles -> New York
 
 **Note:** You will have to manually terminate the process which listens on port 50051 by finding it via the `ps` command, and killing it.

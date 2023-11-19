@@ -1,4 +1,4 @@
-.PHONY: install-deps generate-mocks proto start test
+.PHONY: install-deps generate-mocks proto start-client start-server test
 
 PROTO_FILE = ./internal/proto/tickets.proto
 SERVER_PID_FILE := server.pid
@@ -16,9 +16,11 @@ generate-mocks: install-deps
 proto: install-deps
 	protoc -I=. --go_out ./internal/proto --go-grpc_out=./internal/proto $(PROTO_FILE)
 
-start: install-deps
+start-client:
+	@bash scripts/cli_client.sh
+
+start-server: install-deps
 	go run ./cmd &
 
 test: install-deps
 	go test ./...
-	@bash scripts/test.sh
