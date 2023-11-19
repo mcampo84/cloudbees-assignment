@@ -2,6 +2,8 @@
 
 package grpc
 
+import "context"
+
 type TicketService interface {
-	PurchaseTicket(userID uint, from string, to string, purchasePrice float32) (Ticket, error)
+	PurchaseTicket(ctx context.Context, userID uint, from string, to string, purchasePrice float32) (Ticket, error)
 }

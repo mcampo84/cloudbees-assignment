@@ -22,7 +22,7 @@ func (s *Server) PurchaseTicket(ctx context.Context, req *pb.PurchaseTicketReque
 	to := req.GetTo()
 	purchasePrice := req.GetPrice()
 
-	ticket, err := s.ticketService.PurchaseTicket(userID, from, to, purchasePrice)
+	ticket, err := s.ticketService.PurchaseTicket(ctx, userID, from, to, purchasePrice)
 	st, ok := status.FromError(err)
 	if !ok {
 		return nil, st.Err()

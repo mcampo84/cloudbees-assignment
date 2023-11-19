@@ -13,11 +13,11 @@ type ServerAdapter struct {
 	server *grpc.Server
 }
 
-func NewServer(server *grpc.Server) pb.TrainTicketServiceServer {
+func NewServerAdapter(server *grpc.Server) pb.TrainTicketServiceServer {
 	return &ServerAdapter{server: server}
 }
 
 // PurchaseTicket implements pb.TrainTicketServiceServer.
-func (a *ServerAdapter) PurchaseTicket(context.Context, *pb.PurchaseTicketRequest) (*pb.PurchaseTicketResponse, error) {
-	panic("unimplemented")
+func (a *ServerAdapter) PurchaseTicket(ctx context.Context, req *pb.PurchaseTicketRequest) (*pb.PurchaseTicketResponse, error) {
+	return a.server.PurchaseTicket(ctx, req)
 }
