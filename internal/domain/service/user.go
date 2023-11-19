@@ -3,6 +3,7 @@
 package service
 
 type User interface {
+	GetID() uint
 	GetFirstName() string
 	GetLastName() string
 	GetEmail() string

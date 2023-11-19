@@ -9,9 +9,13 @@ type TicketModelAdapter struct {
 	ticket *model.Ticket
 }
 
+func (a *TicketModelAdapter) GetID() uint {
+	return a.ticket.ID
+}
+
 // GetFrom implements service.Ticket.
 func (a *TicketModelAdapter) GetFrom() string {
-	return a.ticket.From
+	return a.ticket.Train.From
 }
 
 // GetPurchasePrice implements service.Ticket.
@@ -21,7 +25,7 @@ func (a *TicketModelAdapter) GetPurchasePrice() float32 {
 
 // GetTo implements service.Ticket.
 func (a *TicketModelAdapter) GetTo() string {
-	return a.ticket.To
+	return a.ticket.Train.To
 }
 
 // GetUser implements service.Ticket.

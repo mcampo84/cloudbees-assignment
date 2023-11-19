@@ -6,5 +6,7 @@ var Module = fx.Module(
 	"Service Adapters",
 	fx.Provide(
 		NewTicketRepositoryAdapter,
+		NewUserRepositoryAdapter,
+		NewTrainRepositoryAdapter,
 	),
 )

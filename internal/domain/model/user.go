@@ -8,6 +8,7 @@ type User struct {
 	FirstName string
 	LastName  string
 	Email     string
+	Tickets   []*Ticket
 }
 
 func NewUser(firstName string, lastName string, email string) *User {

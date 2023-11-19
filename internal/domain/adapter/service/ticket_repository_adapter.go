@@ -8,12 +8,27 @@ import (
 )
 
 type TicketRepositoryAdapter struct {
-	repo *in_memory.TicketRepository
+	ticketRepo *in_memory.TicketRepository
+	trainRepo  *in_memory.TrainRepository
+	userRepo   *in_memory.UserRepository
 }
 
-// Create implements service.TicketRepository.
-func (a *TicketRepositoryAdapter) Create(ctx context.Context, firstName string, lastName string, email string, from string, to string, purchasePrice float32) (service.Ticket, error) {
-	ticket, err := a.repo.Create(ctx, firstName, lastName, email, from, to, purchasePrice)
+func NewTicketRepositoryAdapter(ticketRepo *in_memory.TicketRepository, userRepo *in_memory.UserRepository, trainRepo *in_memory.TrainRepository) service.TicketRepository {
+	return &TicketRepositoryAdapter{ticketRepo: ticketRepo, userRepo: userRepo, trainRepo: trainRepo}
+}
+
+func (a *TicketRepositoryAdapter) Create(ctx context.Context, user service.User, train service.Train, purchasePrice float32) (service.Ticket, error) {
+	userModel, err := a.userRepo.GetByID(user.GetID())
+	if err != nil {
+		return nil, err
+	}
+
+	trainModel, err := a.trainRepo.GetByID(train.GetID())
+	if err != nil {
+		return nil, err
+	}
+
+	ticket, err := a.ticketRepo.Create(ctx, userModel, trainModel, purchasePrice)
 	if err != nil {
 		return nil, err
 	}
@@ -21,6 +36,6 @@ func (a *TicketRepositoryAdapter) Create(ctx context.Context, firstName string, 
 	return NewTicketModelAdapter(ticket), nil
 }
 
-func NewTicketRepositoryAdapter(repo *in_memory.TicketRepository) service.TicketRepository {
-	return &TicketRepositoryAdapter{repo: repo}
+func (a *TicketRepositoryAdapter) Delete(ctx context.Context, id uint) {
+	a.ticketRepo.Delete(ctx, id)
 }

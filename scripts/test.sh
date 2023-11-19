@@ -8,8 +8,8 @@ PROTO_FILE="./internal/proto/tickets.proto"  # Replace with the path to your .pr
 USER_FIRST_NAME="John"
 USER_LAST_NAME="Doe"
 USER_EMAIL="john@example.com"
-FROM="London"
-TO="France"
+FROM="New York"
+TO="Chicago"
 PRICE=20.0
 
 # Create JSON payload for the PurchaseTicket request

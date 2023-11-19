@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	"github.com/mcampo84/cloudbees-assignment/internal/proto/pb"
 )
@@ -31,4 +32,20 @@ func (s *Server) PurchaseTicket(ctx context.Context, req *pb.Ticket) (*pb.Receip
 	}
 
 	return ticket.GenerateReceipt(), nil
+}
+
+func (a *Server) ViewReceipt(context.Context, *pb.User) (*pb.Receipt, error) {
+	panic("unimplemented")
+}
+
+func (a *Server) ViewPassengerManifest(context.Context, *emptypb.Empty) (*pb.Manifest, error) {
+	panic("unimplemented")
+}
+
+func (a *Server) CancelTicket(context.Context, *pb.User) (*emptypb.Empty, error) {
+	panic("unimplemented")
+}
+
+func (a *Server) ChangeSeat(context.Context, *pb.ChangeSeatRequest) (*pb.Receipt, error) {
+	panic("unimplemented")
 }

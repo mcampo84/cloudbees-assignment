@@ -3,6 +3,7 @@
 package service
 
 type Ticket interface {
+	GetID() uint
 	GetUser() User
 	GetFrom() string
 	GetTo() string

@@ -10,6 +10,7 @@ import (
 
 	"github.com/mcampo84/cloudbees-assignment/cmd/server"
 	"github.com/mcampo84/cloudbees-assignment/internal/domain"
+	"github.com/mcampo84/cloudbees-assignment/internal/domain/service"
 	localRPC "github.com/mcampo84/cloudbees-assignment/internal/grpc"
 	"github.com/mcampo84/cloudbees-assignment/internal/proto/pb"
 )
@@ -22,6 +23,7 @@ func main() {
 		localRPC.Module,
 		domain.Module,
 		server.Module,
+		fx.Invoke(seedTrains),
 		fx.Invoke(startServer),
 	)
 
@@ -33,6 +35,10 @@ func main() {
 	defer app.Stop(ctx)
 
 	select {}
+}
+
+func seedTrains(svc service.TrainService) {
+	svc.InitTrains()
 }
 
 func startServer(localServer pb.TrainTicketServiceServer) {

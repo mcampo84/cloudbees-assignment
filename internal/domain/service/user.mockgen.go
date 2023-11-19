@@ -61,6 +61,20 @@ func (mr *MockUserMockRecorder) GetFirstName() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFirstName", reflect.TypeOf((*MockUser)(nil).GetFirstName))
 }
 
+// GetID mocks base method.
+func (m *MockUser) GetID() uint {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetID")
+	ret0, _ := ret[0].(uint)
+	return ret0
+}
+
+// GetID indicates an expected call of GetID.
+func (mr *MockUserMockRecorder) GetID() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetID", reflect.TypeOf((*MockUser)(nil).GetID))
+}
+
 // GetLastName mocks base method.
 func (m *MockUser) GetLastName() string {
 	m.ctrl.T.Helper()
